@@ -1,5 +1,10 @@
 # MemoryDumpAnalyzer
-- This program will take any memory or dump file (.mem or .dmp) and generate a findings report in the form of a text file.
+- The goal of this project is to develop a Windows debugger automation tool in Python which runs
+a set of commands, collects and processes the results and then reports the essential sections in a
+well organized text report. The resulting text includes explanations and summaries describing
+each important part of the dump file analysis to help clients determine and analyze the causes of
+the crashes.
+# Extra Info
 -  WINDBG (Windows Debugger) MUST BE INSTALLED.
 -  The program must be run with administative privilages to work properly.
 -  Utilizes a custom library named `file_write`, mainly for structuring the info file as well as the explanations.
