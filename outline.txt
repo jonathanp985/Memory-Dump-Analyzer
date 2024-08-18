@@ -1,0 +1,89 @@
+OUTLINE:
+* After Crash Windows creates a MEMORY.dmp file
+* Use Windbg to process .dmp files 
+* Grab certain data from the file (commands: peb, teb, analyze, lm .etc)
+* Process the data from the file with python code (parsing, patterns)
+* Different things to analyze:
+
+    - Basic Info
+    - Processor Info
+    - Threads and Sack info
+    - Running Modules and processes info
+    - Exception info
+    - System state info
+
+
+- Basic Info:  dump file type, OS version, build number, and system uptime:
+    1. What we have now and synopsis explanation
+    ADD:
+        SYSTEM_VERSION: 10.0.18362
+        Uptime: 2 days 4:32:15.123
+        Dump file type: Kernel Dump
+
+    Use this information to summarize the basic context of the crash
+
+- Processor Info: Detailed information about the system's processors, including architecture, number of processors, and CPU usage.
+    1. Process effect explanation
+    ADD:
+        Architecture: x64 (64-bit)
+        Number of processors: 8
+        Current processor: 0
+
+        Understand the hardware context and CPU load at the time of the crash.
+
+- Threads and Stack info: Command that lists the call stacks for all active threads, 
+                        which is crucial for identifying what the threads were doing at the time of the crash.
+    1. Theading and Stack tracing Explanation
+    ADD (EXAMPLE INSTANCE):
+    0  Id: 1234.5678   Suspend: 1 Teb: 00007ff6`34e4c000 Unfrozen
+    # Child-SP          RetAddr           Call Site
+    00 00000000`00ffeca8 00007ff6`d5a7ad8c ntdll!NtWaitForMultipleObjects+0x14
+
+    Identifying potential deadlocks or problematic functions.
+
+- Running Modules and Processes Info: Loaded modules and related info in realation to processes and process Instance count
+    1. Modules and Process Info
+    ADD:
+        DONE
+        (EXAMPLE (OPTIONAL))
+        start             end                 module name
+        00007ff6`d5a00000 00007ff6`d5c9b000   kernel32   (deferred)
+
+    Identify any suspicious or unusual modules that might be related to the crash.
+
+
+- Exception Info(Last + Least Useful): Have error information about system crash:
+    1. Explanation for Exceptions:
+    ADD:
+        EXCEPTION_CODE: (NTSTATUS) 0xc0000005 - The instruction at 0x%p referenced memory at 0x%p. The memory could not be %s.
+    
+    Understanding the cause of the crash and pinpointing the exact fault.
+
+
+- System State: virtual memory '!vm' command provides a summary of the system's memory usage:
+    1. VM Example and Explanation
+        Physical Memory: 8191 MB
+        Free Memory: 2048 MB
+        Page File: 16383 MB
+
+    Diagnosing issues related to memory pressure or leaks.
+
+ORDER OF INFO FILE (Explanation inclusive):
+
+    1. Synopsis and Basic Info
+    2. Processor Info (PHYSICAL SECURITY)
+    3. System State Info 
+    4. Running Modules and Processes info
+    5. Thread and Stack info
+    6. Exception Info (Might replace)
+
+
+
+
+
+
+
+
+
+
+
